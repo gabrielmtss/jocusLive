@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { GamesService } from './games.service';
 
@@ -11,8 +11,23 @@ export class GamesController {
     return this.gamesService.findAll();
   }
 
+  @Get()
+  findById() {
+    return this.gamesService.findById();
+  }
+
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
     return this.gamesService.create(createGameDto);
+  }
+
+  @Put()
+  update() {
+    return this.gamesService.update();
+  }
+
+  @Delete()
+  delete() {
+    return this.gamesService.delete();
   }
 }

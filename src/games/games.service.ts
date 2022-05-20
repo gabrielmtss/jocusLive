@@ -10,11 +10,23 @@ export class GamesService {
     return this.games;
   }
 
+  findById() {
+    throw new Error('Method not implemented.');
+  }
+
   create(createGameDto: CreateGameDto) {
     const game: Game = { id: 'random id', ...createGameDto };
 
     this.games.push(game);
 
     return game;
+  }
+
+  update() {
+    throw new Error('Method not implemented.');
+  }
+
+  delete() {
+    throw new Error('Method not implemented.');
   }
 }
