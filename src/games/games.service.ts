@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateGameDto } from './dto/create-game.dto';
 
 @Injectable()
 export class GamesService {
@@ -6,7 +7,7 @@ export class GamesService {
     return 'Listar todas as mesas';
   }
 
-  create() {
-    return 'Adicionar um jogo';
+  create(createGameDto: CreateGameDto) {
+    return 'Adicionar um jogo: ' + JSON.stringify(createGameDto);
   }
 }
