@@ -1,8 +1,13 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateGenderDto } from './dto/create-gender.dto';
+import { GendersService } from './genders.service';
 
+@ApiTags('genders')
 @Controller('genders')
 export class GendersController {
-  gendersService: any;
+  constructor(private gendersService: GendersService) {}
+
   @Get()
   findAll() {
     return this.gendersService.findAll();
@@ -14,8 +19,8 @@ export class GendersController {
   }
 
   @Post()
-  create() {
-    return this.gendersService.create();
+  create(@Body() createGenderDto: CreateGenderDto) {
+    return this.gendersService.create(createGenderDto);
   }
 
   @Put()

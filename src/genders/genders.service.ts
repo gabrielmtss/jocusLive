@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { createGenderDto } from './dto/create-gender.dto';
+import { CreateGenderDto } from './dto/create-gender.dto';
 import { Gender } from './entities/gender.entity';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GendersService {
     throw new Error('Method not implemented.');
   }
 
-  create(createGenderDto: createGenderDto) {
+  create(createGenderDto: CreateGenderDto) {
     const gender: Gender = { id: 'random id', ...createGenderDto };
 
     this.genders.push(gender);
