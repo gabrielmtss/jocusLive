@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GamesModule } from './games/games.module';
 import { GendersModule } from './genders/genders.module';
+import { GendersModule } from './genders/genders.module';
 
 @Module({
   imports: [GamesModule, GendersModule],

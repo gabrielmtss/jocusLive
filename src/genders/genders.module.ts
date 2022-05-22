@@ -4,6 +4,6 @@ import { GendersController } from './genders.controller';
 
 @Module({
   providers: [GendersService],
-  controllers: [GendersController]
+  controllers: [GendersController],
 })
 export class GendersModule {}
