@@ -1,4 +1,4 @@
-export class createGenderDto {
+export class Gender {
   id: string;
   name: string;
 }
