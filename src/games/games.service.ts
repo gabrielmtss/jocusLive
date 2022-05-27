@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { Game } from './entities/game.entity';
 
@@ -6,8 +7,10 @@ import { Game } from './entities/game.entity';
 export class GamesService {
   games: Game[] = [];
 
+  constructor(private readonly prisma: PrismaService) {}
+
   findAll() {
-    return this.games;
+    return this.prisma.game.findMany();
   }
 
   findById() {
