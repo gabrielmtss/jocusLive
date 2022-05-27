@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGenderDto } from './dto/create-gender.dto';
 import { Gender } from './entities/gender.entity';
 
@@ -6,8 +7,10 @@ import { Gender } from './entities/gender.entity';
 export class GendersService {
   genders: Gender[] = [];
 
+  constructor(private readonly prisma: PrismaService) {}
+
   findAll() {
-    return this.genders;
+    return this.prisma.gender.findMany();
   }
 
   findById() {
