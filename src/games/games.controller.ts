@@ -3,14 +3,17 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Game } from './entities/game.entity';
 import { CreateGameDto } from './dto/create-game.dto';
 import { GamesService } from './games.service';
+import { UpdateGameDto } from './dto/update-game.dto';
 
 @ApiTags('games')
 @Controller('games')
@@ -29,7 +32,7 @@ export class GamesController {
   @ApiOperation({
     summary: 'Visualizar um jogo',
   })
-  findById(@Param('id') id: string): Promise<Game> {
+  findOne(@Param('id') id: string): Promise<Game> {
     return this.gamesService.findOne(id);
   }
 
@@ -41,19 +44,20 @@ export class GamesController {
     return this.gamesService.create(dto);
   }
 
-  @Put()
+  @Patch(':id')
   @ApiOperation({
-    summary: 'Atualizar um jogo',
+    summary: 'Editar um jogo pelo ID',
   })
-  update() {
-    return this.gamesService.update();
+  update(@Param('id') id: string, @Body() dto: UpdateGameDto): Promise<Game> {
+    return this.gamesService.update(id, dto);
   }
 
-  @Delete()
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Deletar um jogo',
+    summary: 'Deletar um, jogo pelo ID',
   })
-  delete() {
-    return this.gamesService.delete();
+  delete(@Param('id') id: string) {
+    this.gamesService.delete(id);
   }
 }

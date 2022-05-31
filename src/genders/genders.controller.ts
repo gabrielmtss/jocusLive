@@ -1,35 +1,66 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Gender } from './entities/gender.entity';
 import { CreateGenderDto } from './dto/create-gender.dto';
 import { GendersService } from './genders.service';
+import { UpdateGenderDto } from './dto/update-gender.dto';
 
 @ApiTags('genders')
 @Controller('genders')
 export class GendersController {
-  constructor(private gendersService: GendersService) {}
+  constructor(private gamesService: GendersService) {}
 
   @Get()
-  findAll() {
-    return this.gendersService.findAll();
+  @ApiOperation({
+    summary: 'Listar todas os jogos',
+  })
+  findAll(): Promise<Gender[]> {
+    return this.gamesService.findAll();
   }
 
-  @Get()
-  findById() {
-    return this.gendersService.findById();
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Visualizar um jogo',
+  })
+  findOne(@Param('id') id: string): Promise<Gender> {
+    return this.gamesService.findOne(id);
   }
 
   @Post()
-  create(@Body() createGenderDto: CreateGenderDto) {
-    return this.gendersService.create(createGenderDto);
+  @ApiOperation({
+    summary: 'Criar um jogo',
+  })
+  create(@Body() dto: CreateGenderDto): Promise<Gender> {
+    return this.gamesService.create(dto);
   }
 
-  @Put()
-  update() {
-    return this.gendersService.update();
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Editar um jogo pelo ID',
+  })
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateGenderDto,
+  ): Promise<Gender> {
+    return this.gamesService.update(id, dto);
   }
 
-  @Delete()
-  delete() {
-    return this.gendersService.delete();
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Deletar um, jogo pelo ID',
+  })
+  delete(@Param('id') id: string) {
+    this.gamesService.delete(id);
   }
 }
