@@ -1,34 +1,63 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
+  constructor(private gamesService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @ApiOperation({
+    summary: 'Listar todas os jogos',
+  })
+  findAll(): Promise<User[]> {
+    return this.gamesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @ApiOperation({
+    summary: 'Visualizar um jogo',
+  })
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.gamesService.findOne(id);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: 'Criar um jogo',
+  })
+  create(@Body() dto: CreateUserDto): Promise<User> {
+    return this.gamesService.create(dto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @ApiOperation({
+    summary: 'Editar um jogo pelo ID',
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto): Promise<User> {
+    return this.gamesService.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Deletar um, jogo pelo ID',
+  })
+  delete(@Param('id') id: string) {
+    this.gamesService.delete(id);
   }
 }
