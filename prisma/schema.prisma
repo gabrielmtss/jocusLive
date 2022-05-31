@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Game {
-  id                 String   @id @default(uuid())
+  id                 String @id @default(uuid())
   title              String
   coverImageUrl      String
   year               Int
@@ -16,14 +16,35 @@ model Game {
   trailerYouTubeUrl  String
   GameplayYouTubeUrl String
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Gender {
-  id        String   @id @default(uuid())
-  name      String
-  
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String
+  password String
+  cpf      String
+  isAdmin  Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id       String  @id @default(uuid())
+  title String
+  imageUrl String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
