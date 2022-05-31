@@ -5,8 +5,6 @@ import { Game } from './entities/game.entity';
 
 @Injectable()
 export class GamesService {
-  games: Game[] = [];
-
   constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
@@ -17,12 +15,10 @@ export class GamesService {
     throw new Error('Method not implemented.');
   }
 
-  create(createGameDto: CreateGameDto) {
-    const game: Game = { id: 'random id', ...createGameDto };
+  create(dto: CreateGameDto) {
+    const data: Game = { ...dto };
 
-    this.games.push(game);
-
-    return game;
+    return this.prisma.game.create({ data });
   }
 
   update() {

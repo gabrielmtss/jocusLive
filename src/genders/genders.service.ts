@@ -5,8 +5,6 @@ import { Gender } from './entities/gender.entity';
 
 @Injectable()
 export class GendersService {
-  genders: Gender[] = [];
-
   constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
@@ -17,12 +15,10 @@ export class GendersService {
     throw new Error('Method not implemented.');
   }
 
-  create(createGenderDto: CreateGenderDto) {
-    const gender: Gender = { id: 'random id', ...createGenderDto };
+  create(dto: CreateGenderDto) {
+    const data: Gender = { ...dto };
 
-    this.genders.push(gender);
-
-    return gender;
+    return this.prisma.gender.create({ data });
   }
 
   update() {
