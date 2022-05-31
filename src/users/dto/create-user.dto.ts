@@ -24,6 +24,12 @@ export class CreateUserDto {
   })
   password: string;
 
+  @ApiProperty({
+    description: 'Confirmação da para login',
+    example: 'feijao123',
+  })
+  confirmPassword: string;
+
   @IsString()
   @ApiProperty({
     description: 'O CPF do usuário',
